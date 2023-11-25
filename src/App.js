@@ -1,23 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { gql, useQuery } from "@apollo/client";
+
+const SPACEX_QUERY = gql`
+  query LaunchesPast {
+    launchesPast {
+      mission_name
+    }
+  }
+`;
 
 function App() {
+  const { loading, error, data } = useQuery(SPACEX_QUERY);
+
+  if (loading) return <h1>Loading...</h1>;
+  if (error) return <p>{error.message}</p>;
+  console.log(data);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>SpaceX Launches</h1>
     </div>
   );
 }
